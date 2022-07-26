@@ -38,9 +38,14 @@ app.post("/api/notes",(req,res)=>{
 app.delete("/api/notes/:id",(req,res)=>{
     let notes = JSON.parse(fs.readFileSync("./db/db.json","utf8"));
     let newNote = req.params.id 
-    let updatedNotes = [notes.splice(newNote,1)] // Splice to remove
-    fs.writeFileSync("./db/db.json". JSON.stringify(updatedNotes))
-    res.json(updatedNotes)
+    let indextoRemove = notes.findIndex(function(element){
+        return element.id===newNote
+    }) 
+    notes.splice(indextoRemove,1)
+    // Splice to remove
+
+    fs.writeFileSync("./db/db.json", JSON.stringify(notes))
+    res.json(notes)
 
 
 });
